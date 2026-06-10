@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/glam/assets/svg/glam-wordmark.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#D30643" />
+    <title>GLAM — творчество, которое расслабляет</title>
+    <meta
+      name="description"
+      content="GLAM — премиальные DIY-наборы для создания картин из стеклянных страз. Ручная сборка в Москве, доставка по России."
+    />
+
+    <!-- Open Graph / соцсети. Абсолютные URL указывают на текущий деплой
+         (GitHub Pages). При переезде на собственный домен заменить
+         og:url / og:image / twitter:image на новый адрес. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GLAM" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:url" content="https://serenedrsk.github.io/glam/" />
+    <meta property="og:title" content="GLAM — творчество, которое расслабляет" />
+    <meta property="og:description" content="Премиальные DIY-наборы для создания картин из стеклянных страз. Ручная сборка в Москве." />
+    <meta property="og:image" content="https://serenedrsk.github.io/glam/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="670" />
+    <meta property="og:image:alt" content="Картины GLAM из стеклянных страз" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GLAM — творчество, которое расслабляет" />
+    <meta name="twitter:description" content="Премиальные DIY-наборы для создания картин из стеклянных страз." />
+    <meta name="twitter:image" content="https://serenedrsk.github.io/glam/og-image.jpg" />
+
+    <!-- ALWAYS open at the top of the page on reload.
+         This must be inline in <head> and run synchronously, BEFORE
+         the browser tries to restore the previous scroll position. -->
+    <script>
+      try {
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+        // Catch the moment after browser parses but before paint
+        document.addEventListener('DOMContentLoaded', function () {
+          window.scrollTo(0, 0);
+        });
+      } catch (e) { /* no-op */ }
+
+      // Bulletproof preloader wordmark: the "GLAM" letters stay invisible
+      // (opacity:0 in critical CSS) until the Oswald font is CONFIRMED
+      // loaded, then fade in. This makes a wrong-font flash impossible —
+      // the word can only ever appear already in Oswald. Hard timeout
+      // guarantees it reveals even if the font API stalls.
+      (function () {
+        function reveal() {
+          document.documentElement.classList.add('fonts-ready');
+        }
+        try {
+          if (document.fonts && document.fonts.load) {
+            document.fonts.load('500 1em "Oswald"').then(reveal, reveal);
+          }
+        } catch (e) { /* no-op */ }
+        // Fallbacks: reveal on full font readiness, and a hard cap so the
+        // wordmark is never stuck hidden.
+        try { document.fonts.ready.then(reveal); } catch (e) { /* no-op */ }
+        setTimeout(reveal, 1400);
+      })();
+
+      // Страховка для async-CSS (Google Fonts ниже): при мгновенном
+      // кэш-хите onload у <link> может потеряться, и media останется
+      // "print". После полной загрузки страницы переключаем вручную.
+      window.addEventListener('load', function () {
+        try {
+          var links = document.querySelectorAll('link[rel="stylesheet"][media="print"]');
+          for (var i = 0; i < links.length; i++) links[i].media = 'all';
+        } catch (e) { /* no-op */ }
+      });
+    </script>
+
+    <!-- Brand display (Oswald), accent (Playfair italic) and mono
+         (IBM Plex Mono) are SELF-HOSTED woff2 subsets, declared with
+         font-display:block in the critical CSS below and preloaded here.
+         Result: the preloader wordmark + hero headline paint in the
+         correct font on the very first frame — no fallback-then-swap
+         flash. Only the body/UI sans (Inter, Nunito Sans) still load
+         from Google, where a sans→sans swap is imperceptible. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/glam/fonts/oswald-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/glam/fonts/oswald-cyrillic.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/glam/fonts/playfair-italic-cyrillic.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/glam/fonts/plexmono-500-cyrillic.woff2" crossorigin />
+    <!-- Body/UI sans грузим НЕблокирующе (media=print → all по onload):
+         первый кадр не ждёт Google Fonts, а sans→sans swap для Inter и
+         Nunito незаметен. Брендовые шрифты self-hosted и не зависят
+         от этого запроса. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&display=swap"
+      />
+    </noscript>
+
+    <!-- Preload critical above-fold images so they paint alongside fonts.
+         Hero is the very first thing the user sees; pillar-1 sits right
+         below, so we kick off both fetches in parallel before the main
+         bundle parses. -->
+    <link
+      rel="preload"
+      as="image"
+      href="/glam/assets/images/hero.webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/glam/assets/images/pillar-1-ritual.webp"
+      fetchpriority="high"
+    />
+
+    <!-- Critical CSS — applied before main stylesheet loads so the
+         crimson preloader curtain shows immediately on first paint
+         (prevents the white-flash + unstyled GLAM word on reload). -->
+    <style>
+      /* ── Self-hosted brand faces (woff2 subsets). font-display:block so
+         text stays invisible until the real font is ready instead of
+         flashing a fallback first; paired with the <link rel=preload>
+         above, the wait is imperceptible and the correct font shows on
+         the first frame. ── */
+      @font-face {
+        font-family: 'Oswald'; font-style: normal; font-weight: 200 700; font-display: block;
+        src: url('fonts/oswald-cyrillic.woff2') format('woff2');
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: 'Oswald'; font-style: normal; font-weight: 200 700; font-display: block;
+        src: url('fonts/oswald-latin-ext.woff2') format('woff2');
+        unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      @font-face {
+        font-family: 'Oswald'; font-style: normal; font-weight: 200 700; font-display: block;
+        src: url('fonts/oswald-latin.woff2') format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: 'Playfair Display'; font-style: italic; font-weight: 400 900; font-display: block;
+        src: url('fonts/playfair-italic-cyrillic.woff2') format('woff2');
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: 'Playfair Display'; font-style: italic; font-weight: 400 900; font-display: block;
+        src: url('fonts/playfair-italic-latin.woff2') format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: block;
+        src: url('fonts/plexmono-400-cyrillic.woff2') format('woff2');
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: block;
+        src: url('fonts/plexmono-400-latin.woff2') format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: block;
+        src: url('fonts/plexmono-500-cyrillic.woff2') format('woff2');
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: block;
+        src: url('fonts/plexmono-500-latin.woff2') format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      html { background: #D30643; }
+      body { margin: 0; background: #D30643; font-family: system-ui, sans-serif; color: #FFB3D6; }
+      .preloader {
+        position: fixed; inset: 0; z-index: 1000;
+        display: flex; align-items: center; justify-content: center;
+        background: #D30643;
+      }
+      .preloader__curtain {
+        position: absolute; inset: 0; background: #D30643;
+      }
+      .preloader__inner {
+        position: relative;
+        display: flex; flex-direction: column;
+        align-items: center; gap: 24px;
+        color: #FFB3D6;
+      }
+      .preloader__wordmark { display: flex; gap: 0.04em; overflow: hidden; line-height: 0.9; }
+      .preloader__word {
+        display: inline-block;
+        font-family: 'Oswald', 'Nunito Sans', sans-serif;
+        font-weight: 500;
+        font-size: clamp(96px, 16vw, 240px);
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        color: #FFB3D6;
+        /* Hidden until the Oswald font is confirmed loaded (JS adds
+           html.fonts-ready), so the wordmark never paints in a fallback
+           font. Fades in smoothly the instant the real font is ready. */
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      html.fonts-ready .preloader__word { opacity: 1; }
+      .preloader__counter {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #FFB3D6;
+        opacity: 0.7;
+      }
+      /* Hide only the nav until ready — main is below the crimson
+         preloader anyway (z-index 1000), so it doesn't flash unstyled. */
+      .nav { visibility: hidden; }
+      html.is-ready .nav { visibility: visible; }
+    </style>
+    <script type="module" crossorigin src="/glam/assets/index-BtKEHK7r.js"></script>
+    <link rel="modulepreload" crossorigin href="/glam/assets/gsap-xgxdCp6f.js">
+    <link rel="stylesheet" crossorigin href="/glam/assets/style-CVT2T8jN.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#top">перейти к&nbsp;контенту</a>
+
+    <div id="app">
+      <!-- ─── Preloader ──────────────────────────────────────────── -->
+      <div class="preloader" aria-hidden="true">
+        <div class="preloader__curtain"></div>
+        <div class="preloader__inner">
+          <div class="preloader__wordmark" aria-label="GLAM">
+            <span class="preloader__word">G</span>
+            <span class="preloader__word">L</span>
+            <span class="preloader__word">A</span>
+            <span class="preloader__word">M</span>
+          </div>
+          <div class="preloader__counter">
+            <span class="t-eyebrow">страза за стразой</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Top navigation ────────────────────────────────────── -->
+      <header class="nav" data-theme="brand">
+        <div class="nav__inner container">
+          <a class="nav__brand" href="#top" data-cursor="наверх">
+            <svg class="nav__logo" viewBox="0 0 860 343" fill="none" aria-label="GLAM">
+              <path d="M 89.025 343 C 66.941 343 49.412 338.316 36.438 328.949 C 23.464 319.582 14.078 306.358 8.281 289.277 C 2.76 271.92 0 251.533 0 228.116 L 0 115.711 C 0 91.742 2.76 71.08 8.281 53.723 C 13.802 36.366 23.464 23.142 37.266 14.051 C 51.344 4.684 70.668 0 95.236 0 C 118.147 0 136.366 3.857 149.893 11.571 C 163.419 19.285 173.08 30.443 178.877 45.045 C 184.95 59.371 187.987 76.865 187.987 97.528 L 187.987 114.884 L 129.603 114.884 L 129.603 95.875 C 129.603 85.13 128.775 75.901 127.119 68.187 C 125.739 60.473 122.702 54.687 118.009 50.83 C 113.593 46.698 106.277 44.631 96.064 44.631 C 85.298 44.631 77.431 47.249 72.462 52.483 C 67.769 57.718 64.733 64.605 63.352 73.146 C 62.248 81.686 61.696 91.053 61.696 101.247 L 61.696 241.34 C 61.696 252.911 62.662 262.967 64.595 271.507 C 66.527 280.048 70.116 286.66 75.36 291.343 C 80.605 295.751 88.058 297.955 97.72 297.955 C 107.658 297.955 115.249 295.476 120.494 290.517 C 125.739 285.558 129.327 278.67 131.26 269.854 C 133.468 261.038 134.572 250.569 134.572 238.447 L 134.572 207.04 L 98.548 207.04 L 98.548 168.607 L 189.643 168.607 L 189.643 338.454 L 150.307 338.454 L 145.752 305.394 C 141.335 316.414 134.572 325.506 125.463 332.669 C 116.629 339.556 104.483 343 89.025 343 Z" fill="currentColor" />
+              <path d="M 236.265 338.454 L 236.265 3.719 L 297.547 3.719 L 297.547 296.302 L 378.704 296.302 L 378.704 338.454 L 236.265 338.454 Z" fill="currentColor" />
+              <path d="M 393.568 338.454 L 460.648 3.719 L 526.07 3.719 L 593.149 338.454 L 536.422 338.454 L 523.172 261.176 L 464.788 261.176 L 451.124 338.454 L 393.568 338.454 Z M 470.999 222.33 L 516.547 222.33 L 493.773 81.824 L 470.999 222.33 Z" fill="currentColor" />
+              <path d="M 626.052 338.454 L 631.848 3.719 L 695.201 3.719 L 742.819 235.554 L 792.507 3.719 L 853.789 3.719 L 860 338.454 L 814.453 338.454 L 809.484 105.793 L 761.866 338.454 L 725.014 338.454 L 676.568 104.966 L 672.013 338.454 L 626.052 338.454 Z" fill="currentColor" />
+            </svg>
+          </a>
+          <nav class="nav__menu" aria-label="Основное меню">
+            <a href="#catalog" data-cursor="каталог">каталог</a>
+            <a href="#ritual-process" data-cursor="процесс">ритуал</a>
+            <a href="#reviews" data-cursor="отзывы">отзывы</a>
+            <a href="#founder" data-cursor="о бренде">о нас</a>
+            <a href="#faq" data-cursor="условия">доставка</a>
+          </nav>
+          <a class="nav__cta" href="https://t.me/glammy_straz" target="_blank" rel="noopener noreferrer" data-cursor="в telegram" data-magnetic data-magnetic-strength="0.25">
+            <span>заказать</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <button
+            class="nav__burger"
+            type="button"
+            aria-label="Открыть меню"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Mobile drawer — hidden on desktop, shown when nav__burger pressed -->
+      <div id="mobile-menu" class="mobile-menu" aria-hidden="true" inert>
+        <div class="mobile-menu__inner">
+          <nav class="mobile-menu__nav" aria-label="Мобильное меню">
+            <a href="#catalog">каталог<span aria-hidden="true">↘</span></a>
+            <a href="#ritual-process">ритуал<span aria-hidden="true">↘</span></a>
+            <a href="#reviews">отзывы<span aria-hidden="true">↘</span></a>
+            <a href="#founder">о&nbsp;нас<span aria-hidden="true">↘</span></a>
+            <a href="#faq">доставка<span aria-hidden="true">↘</span></a>
+          </nav>
+          <div class="mobile-menu__foot">
+            <a class="mobile-menu__cta" href="https://t.me/glammy_straz" target="_blank" rel="noopener noreferrer">
+              <span>заказать</span>
+              <span aria-hidden="true">→</span>
+            </a>
+            <p class="t-mono-sm mobile-menu__sub">
+              творчество, которое расслабляет<br />
+              собирается в&nbsp;Москве
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <main>
+        <!-- ─── S1 · Hero ──────────────────────────────────────── -->
+        <section class="hero" id="top" data-theme="brand" aria-label="Hero">
+          <div class="hero__media" aria-hidden="true">
+            <img
+              class="hero__bg"
+              src="/glam/assets/images/hero.webp"
+              alt=""
+              fetchpriority="high"
+              decoding="async"
+            />
+            <div class="hero__vignette"></div>
+          </div>
+
+          <div class="hero__grid container">
+            <div class="hero__meta">
+              <span class="t-eyebrow">15 сюжетов</span>
+              <span class="t-eyebrow">ручная сборка · москва</span>
+            </div>
+
+            <h1 class="hero__title">
+              <span class="hero__title-line" data-line="01">творчество,</span>
+              <span class="hero__title-line" data-line="02">которое</span>
+              <span class="hero__title-line" data-line="03">расслабляет</span>
+            </h1>
+
+            <div class="hero__foot">
+              <p class="hero__sub t-mono">
+                премиальные наборы для создания картин из&nbsp;стеклянных страз.
+              </p>
+              <a class="hero__cta" href="#catalog" data-cursor="открыть каталог" data-magnetic>
+                <span class="hero__cta-label">выбрать набор</span>
+                <span class="hero__cta-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 32 12" fill="none">
+                    <path d="M0 6 H30 M24 1 L30 6 L24 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ─── S2 · Manifesto ticker ─────────────────────────── -->
+        <section class="ticker" data-theme="light" aria-label="Манифест">
+          <div class="ticker__track">
+            <div class="ticker__group">
+              <span>ты создаёшь искусство</span>
+              <span class="ticker__dot" aria-hidden="true">✶</span>
+              <span>это не просто хобби, это арт</span>
+              <span class="ticker__dot" aria-hidden="true">✶</span>
+              <span>больше гламура — меньше стресса</span>
+              <span class="ticker__dot" aria-hidden="true">✶</span>
+              <span>время для тебя</span>
+              <span class="ticker__dot" aria-hidden="true">✶</span>
+              <span>сияй, твори, вдохновляй</span>
+              <span class="ticker__dot" aria-hidden="true">✶</span>
+              <span>ты создаёшь искусство</span>
+              <span class="ticker__dot" aria-hidden="true">✶</span>
+              <span>это не просто хобби, это арт</span>
+              <span class="ticker__dot" aria-hidden="true">✶</span>
+              <span>больше гламура — меньше стресса</span>
+              <span class="ticker__dot" aria-hidden="true">✶</span>
+              <span>время для тебя</span>
+              <span class="ticker__dot" aria-hidden="true">✶</span>
+              <span>сияй, твори, вдохновляй</span>
+              <span class="ticker__dot" aria-hidden="true">✶</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── S3 · Кодекс (3 пилара, pin-scroll) ──────────────── -->
+        <section class="pillars" aria-label="Кодекс GLAM">
+          <div class="pillars__pin">
+
+            <article class="pillar pillar--01" data-pillar="01" data-theme="soft">
+              <div class="pillar__grid container">
+                <header class="pillar__head">
+                  <span class="t-eyebrow">кодекс — 01 / 03</span>
+                  <span class="t-eyebrow pillar__counter">время</span>
+                </header>
+                <div class="pillar__visual">
+                  <img
+                    class="pillar__img"
+                    src="/glam/assets/images/pillar-1-ritual.webp"
+                    loading="eager"
+                    fetchpriority="high"
+                    decoding="async"
+                    width="1400"
+                    height="1875"
+                    alt="Рука со стилусом подцепляет стразу из лотка"
+                  />
+                </div>
+                <div class="pillar__content">
+                  <h2 class="pillar__title">
+                    время<br />
+                    <em>для тебя</em>
+                  </h2>
+                  <p class="pillar__mono">
+                    повторяющиеся движения помогают разгрузить голову.
+                    одна страза за&nbsp;другой — и&nbsp;ты незаметно перестаёшь
+                    думать о&nbsp;делах и&nbsp;заботах.
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="pillar pillar--02" data-pillar="02" data-theme="dark">
+              <div class="pillar__grid container">
+                <header class="pillar__head">
+                  <span class="t-eyebrow">кодекс — 02 / 03</span>
+                  <span class="t-eyebrow pillar__counter">сияние</span>
+                </header>
+                <div class="pillar__visual">
+                  <img
+                    class="pillar__img"
+                    src="/glam/assets/images/pillar-2-glass.webp"
+                    loading="lazy"
+                    decoding="async"
+                    width="1400"
+                    height="792"
+                    alt="Макро одной красной стеклянной стразы с дисперсией света"
+                  />
+                </div>
+                <div class="pillar__content">
+                  <h2 class="pillar__title">
+                    это не хобби,<br />
+                    это <em>арт</em>
+                  </h2>
+                  <p class="pillar__mono">
+                    каждая страза — настоящее огранённое стекло.
+                    свет преломляется в&nbsp;гранях, поэтому картина
+                    завораживающе сияет при любом освещении.
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="pillar pillar--03" data-pillar="03" data-theme="light">
+              <div class="pillar__grid container">
+                <header class="pillar__head">
+                  <span class="t-eyebrow">кодекс — 03 / 03</span>
+                  <span class="t-eyebrow pillar__counter">арт</span>
+                </header>
+                <div class="pillar__visual">
+                  <img
+                    class="pillar__img"
+                    src="/glam/assets/images/pillar-3-object.webp"
+                    loading="lazy"
+                    decoding="async"
+                    width="1400"
+                    height="1875"
+                    alt="Готовая картина GLAM в раме на стене в минималистичном интерьере"
+                  />
+                </div>
+                <div class="pillar__content">
+                  <h2 class="pillar__title">
+                    ты создаёшь<br />
+                    <em>искусство</em>
+                  </h2>
+                  <p class="pillar__mono">
+                    вместо типичных сюжетов — постеры, попкультура, ирония
+                    и&nbsp;визуальные отсылки. поэтому glam больше похож
+                    на&nbsp;современный арт, чем на&nbsp;рукоделие.
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <nav class="pillars__indicator" aria-hidden="true">
+              <span class="pillars__step is-active" data-step="01"></span>
+              <span class="pillars__step" data-step="02"></span>
+              <span class="pillars__step" data-step="03"></span>
+            </nav>
+          </div>
+        </section>
+
+        <!-- ─── S4 · Каталог (editorial gallery) ──────────────── -->
+        <section class="catalog" id="catalog" data-theme="light" aria-label="Каталог GLAM">
+          <div class="container">
+            <header class="catalog__head">
+              <div data-reveal="title">
+                <div class="catalog__eyebrow">
+                  <span class="t-eyebrow">каталог</span>
+                </div>
+                <h2 class="catalog__title">
+                  выбери свой&nbsp;<em>сюжет</em>
+                </h2>
+              </div>
+              <p class="catalog__lede" data-reveal="text">
+                На&nbsp;сайте представлены флагманские и&nbsp;самые
+                востребованные сюжеты GLAM. Больше вариантов, актуальное
+                наличие, предзаказы и&nbsp;лимитированные дропы —
+                в&nbsp;закрепе в&nbsp;нашем Telegram-канале.
+              </p>
+            </header>
+
+            <div class="catalog__grid">
+              <!-- populated by Catalog.ts -->
+            </div>
+
+            <div class="catalog__more" data-reveal="text">
+              <p class="catalog__more-text">
+                Не&nbsp;нашли свой сюжет?<br />
+                В&nbsp;Telegram-канале GLAM собран полный каталог:
+                дополнительные сюжеты, архивные работы и&nbsp;предзаказы.
+              </p>
+              <a
+                class="catalog__more-btn"
+                href="https://t.me/glam_straz"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="в telegram"
+                data-magnetic
+                data-magnetic-strength="0.2"
+              >
+                <span class="catalog__more-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m22 2-7 20-4-9-9-4 20-7z"/>
+                    <path d="M22 2 11 13"/>
+                  </svg>
+                </span>
+                <span class="catalog__more-label">посмотреть в&nbsp;Telegram</span>
+                <span class="catalog__more-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── S6 · Ритуал (horizontal scroll, 4 шага) ────────── -->
+        <section class="ritual" id="ritual-process" data-theme="dark" aria-label="Процесс">
+          <div class="ritual__pin">
+            <header class="ritual__head container">
+              <span class="t-eyebrow">ритуал</span>
+              <span class="ritual__counter" aria-hidden="true">
+                <span class="ritual__counter-now">01</span>
+                <span class="ritual__counter-sep">/</span>
+                <span class="ritual__counter-total">04</span>
+              </span>
+              <span class="t-eyebrow">~ 7 дней сборки</span>
+            </header>
+
+            <div class="ritual__track">
+
+              <article class="ritual__step ritual__step--01 ritual__step--type" data-step="01">
+                <div class="ritual__step-inner ritual__step-inner--centered container">
+                  <span class="ritual__mega" aria-hidden="true">01</span>
+                  <div class="ritual__content ritual__content--centered">
+                    <span class="t-eyebrow">шаг первый · подготовка</span>
+                    <h2 class="ritual__title ritual__title--centered">
+                      открой коробку<br />
+                      <em>сядь удобно</em>
+                    </h2>
+                    <p class="ritual__mono ritual__mono--centered">
+                      холст. стилус. лоток. стразы.<br />
+                      всё уже готово — остаётся только начать.<br />
+                      включи любимую музыку, налей что-нибудь вкусное.
+                    </p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="ritual__step ritual__step--02" data-step="02">
+                <div class="ritual__step-inner container">
+                  <div class="ritual__visual">
+                    <img
+                      class="ritual__img"
+                      src="/glam/assets/images/ritual-02-glue.webp"
+                      alt="Капля клея e6000 на холсте с разметкой"
+                      loading="eager"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="ritual__content">
+                    <span class="t-eyebrow">02 / клей</span>
+                    <h2 class="ritual__title">
+                      сделай <em>первый штрих</em>
+                    </h2>
+                    <p class="ritual__mono">
+                      небольшая капля клея — и&nbsp;можно начинать.<br />
+                      не&nbsp;спеши: здесь важен сам процесс.
+                    </p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="ritual__step ritual__step--03" data-step="03">
+                <div class="ritual__step-inner container">
+                  <div class="ritual__visual">
+                    <img
+                      class="ritual__img"
+                      src="/glam/assets/images/pillar-1-ritual.webp"
+                      alt="Стилус подцепляет красную стразу из лотка"
+                      loading="eager"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="ritual__content">
+                    <span class="t-eyebrow">03 / выкладка</span>
+                    <h2 class="ritual__title">
+                      выложи <em>стразы</em>
+                    </h2>
+                    <p class="ritual__mono">
+                      просто выкладывай стразу за&nbsp;стразой.<br />
+                      контур — потом заливка. ритм.<br />
+                      один час превращается в&nbsp;три.
+                    </p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="ritual__step ritual__step--04" data-step="04">
+                <div class="ritual__step-inner container">
+                  <div class="ritual__visual">
+                    <img
+                      class="ritual__img"
+                      src="/glam/assets/images/pillar-3-object.webp"
+                      alt="Готовая картина в раме на стене"
+                      loading="eager"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="ritual__content">
+                    <span class="t-eyebrow">04 / готово</span>
+                    <h2 class="ritual__title">
+                      картина <em>готова</em>
+                    </h2>
+                    <p class="ritual__mono">
+                      осталось только выбрать для&nbsp;неё место.<br />
+                      стальной тросик уже на&nbsp;холсте —<br />
+                      из&nbsp;коробки сразу на&nbsp;стену.
+                    </p>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+
+            <nav class="ritual__progress" aria-hidden="true">
+              <span class="ritual__progress-line">
+                <span class="ritual__progress-fill"></span>
+              </span>
+            </nav>
+          </div>
+        </section>
+
+        <!-- ─── S9 · Привет, я Настя ────────────────────────────── -->
+        <section class="founder" id="founder" data-theme="dark" aria-label="Основатель">
+          <div class="founder__grid container">
+
+            <figure class="founder__visual" data-reveal="lift">
+              <img
+                class="founder__img"
+                src="/glam/assets/images/founder-hands.webp"
+                alt="Анастасия Лещёва, основательница GLAM, в мастерской"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="founder__cap t-eyebrow">
+                москва · студия GLAM
+              </figcaption>
+            </figure>
+
+            <div class="founder__content">
+              <h2 class="sr-only">О бренде GLAM</h2>
+              <span class="t-eyebrow founder__eyebrow" data-reveal="text">основатель</span>
+
+              <div class="founder__bio" data-reveal="title">
+                <p class="founder__lead">
+                  Меня зовут <span class="founder__nm">Анастасия</span> —
+                  я&nbsp;основательница <em>GLAM</em>,
+                  графический дизайнер и&nbsp;художник по&nbsp;образованию.
+                </p>
+                <p class="founder__line">
+                  Идея проекта появилась, когда я&nbsp;искала красивые
+                  diy-наборы для&nbsp;творчества, но&nbsp;находила только
+                  однотипные и&nbsp;визуально устаревшие варианты.
+                </p>
+                <p class="founder__line">
+                  Мне хотелось создать что-то, что будет выглядеть
+                  как современный арт-объект, а&nbsp;не как очередное
+                  «хобби на&nbsp;один вечер».
+                </p>
+                <p class="founder__line">
+                  Так появился GLAM — проект на&nbsp;стыке искусства,
+                  дизайна и&nbsp;медитативного процесса. Картины,
+                  которые хочется не&nbsp;только собирать,
+                  но&nbsp;и&nbsp;оставлять в&nbsp;интерьере надолго.
+                </p>
+              </div>
+
+              <footer class="founder__sig" data-reveal>
+                <div class="founder__sig-line">
+                  <span class="founder__sig-mark" aria-hidden="true">—</span>
+                  <h3 class="founder__name">Анастасия Лещёва</h3>
+                </div>
+                <span class="t-eyebrow founder__role">
+                  основатель · арт-директор
+                </span>
+              </footer>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── S10 · Отзывы ──────────────────────────────────────── -->
+        <section class="reviews" id="reviews" data-theme="light" aria-label="Отзывы">
+          <div class="container">
+
+            <header class="reviews__head">
+              <div data-reveal="title">
+                <div class="reviews__eyebrow">
+                  <span class="t-eyebrow">отзывы</span>
+                </div>
+                <h2 class="reviews__title">
+                  что говорят те,<br />
+                  <em>кто уже попробовал</em>
+                </h2>
+              </div>
+            </header>
+
+            <ol class="reviews__grid">
+
+              <li data-reveal class="review review--01">
+                <span class="review__rating" aria-label="5 из 5">★★★★★</span>
+                <blockquote class="review__quote">
+                  <p>
+                    брала в&nbsp;подарок подруге. потом она часа три не&nbsp;отрывалась,
+                    мне даже завидно стало. в&nbsp;итоге заказала
+                    и&nbsp;<em>себе такую же</em>.
+                  </p>
+                </blockquote>
+                <footer class="review__meta">
+                  <div class="review__author">
+                    <span class="review__name">Маша</span>
+                    <span class="review__loc t-mono-sm">СПб</span>
+                  </div>
+                </footer>
+              </li>
+
+              <li data-reveal class="review review--02">
+                <span class="review__rating" aria-label="5 из 5">★★★★★</span>
+                <blockquote class="review__quote">
+                  <p>
+                    не&nbsp;ожидала, что зайдёт. села вечером после работы —
+                    очнулась через 4 часа. теперь <em>висит над диваном</em>,
+                    нормальный повод просто посидеть и&nbsp;посмотреть.
+                  </p>
+                </blockquote>
+                <footer class="review__meta">
+                  <div class="review__author">
+                    <span class="review__name">Аня</span>
+                    <span class="review__loc t-mono-sm">Москва</span>
+                  </div>
+                </footer>
+              </li>
+
+              <li data-reveal class="review review--featured">
+                <span class="review__rating" aria-label="5 из 5">★★★★★</span>
+                <blockquote class="review__quote">
+                  <p>
+                    обычно бросаю всё на&nbsp;полпути, тут досидела до&nbsp;конца.
+                    процесс реально <em>спокойный — без напряга, без&nbsp;мыслей</em>.
+                    собираешь себе и&nbsp;собираешь. вышло сильно лучше,
+                    чем я&nbsp;думала.
+                  </p>
+                </blockquote>
+                <footer class="review__meta">
+                  <div class="review__author">
+                    <span class="review__name">Полина</span>
+                    <span class="review__loc t-mono-sm">Казань</span>
+                  </div>
+                </footer>
+              </li>
+
+              <li data-reveal class="review review--04">
+                <span class="review__rating" aria-label="5 из 5">★★★★★</span>
+                <blockquote class="review__quote">
+                  <p>
+                    маме на&nbsp;нг подарила. она потом две недели всем гостям её&nbsp;показывала.
+                    теперь спрашивает, когда я&nbsp;ей <em>куплю ещё одну</em>.
+                  </p>
+                </blockquote>
+                <footer class="review__meta">
+                  <div class="review__author">
+                    <span class="review__name">Лера</span>
+                    <span class="review__loc t-mono-sm">Москва</span>
+                  </div>
+                </footer>
+              </li>
+
+              <li data-reveal class="review review--05">
+                <span class="review__rating" aria-label="5 из 5">★★★★★</span>
+                <blockquote class="review__quote">
+                  <p>
+                    брала самую дорогую, espresso martini. да, недёшево,
+                    но&nbsp;раз в&nbsp;год можно. сидишь по&nbsp;вечерам — спокойно как-то,
+                    <em>мысли не&nbsp;лезут</em>.
+                  </p>
+                </blockquote>
+                <footer class="review__meta">
+                  <div class="review__author">
+                    <span class="review__name">Карина</span>
+                    <span class="review__loc t-mono-sm">Тюмень</span>
+                  </div>
+                </footer>
+              </li>
+
+              <li data-reveal class="review review--06">
+                <span class="review__rating" aria-label="5 из 5">★★★★★</span>
+                <blockquote class="review__quote">
+                  <p>
+                    уже третью собираю. как-то затягивает. вечера теперь
+                    не&nbsp;«полистала тикток», а&nbsp;<em>нормальные</em>.
+                  </p>
+                </blockquote>
+                <footer class="review__meta">
+                  <div class="review__author">
+                    <span class="review__name">Соня</span>
+                    <span class="review__loc t-mono-sm">Москва</span>
+                  </div>
+                </footer>
+              </li>
+
+            </ol>
+
+          </div>
+        </section>
+
+        <!-- ─── S11 · FAQ / условия предзаказа (notebook) ─────────── -->
+        <section class="faq" id="faq" data-theme="light" aria-label="Условия предзаказа">
+          <div class="container">
+
+            <header class="faq__head">
+              <div data-reveal="title">
+                <div class="faq__eyebrow">
+                  <span class="t-eyebrow">условия</span>
+                  <span class="t-eyebrow">предзаказ</span>
+                </div>
+                <h2 class="faq__title">
+                  как это<br /><em>работает</em>
+                </h2>
+              </div>
+            </header>
+
+            <div class="faq__terms" role="region" aria-label="Детали заказа" data-reveal="lift">
+              <h3 class="faq__terms-title">детали <em>заказа</em></h3>
+              <ol class="faq__terms-list">
+                <li class="faq__term">
+                  <span class="faq__term-num" aria-hidden="true">01</span>
+                  <p>
+                    <strong>каждый набор собирается вручную в&nbsp;Москве.</strong>
+                    обычно отправка занимает несколько дней.
+                  </p>
+                </li>
+                <li class="faq__term">
+                  <span class="faq__term-num" aria-hidden="true">02</span>
+                  <p>
+                    <strong>100% предоплата.</strong>
+                    после оплаты закрепляем сюжет за&nbsp;вами.
+                  </p>
+                </li>
+                <li class="faq__term">
+                  <span class="faq__term-num" aria-hidden="true">03</span>
+                  <p>
+                    <strong>отправка СДЭК по&nbsp;всей России.</strong>
+                    примерный срок доставки до&nbsp;вашего города можно
+                    посмотреть на&nbsp;сайте СДЭК (отправка из&nbsp;Москвы).
+                  </p>
+                </li>
+                <li class="faq__term">
+                  <span class="faq__term-num" aria-hidden="true">04</span>
+                  <p>
+                    <strong>в Москве — курьер или самовывоз.</strong>
+                    удобное время и&nbsp;точку выдачи согласуем лично.
+                  </p>
+                </li>
+                <li class="faq__term">
+                  <span class="faq__term-num" aria-hidden="true">05</span>
+                  <p>
+                    <strong>доставка оплачивается отдельно.</strong>
+                    стоимость зависит от&nbsp;города и&nbsp;рассчитывается
+                    после подтверждения заказа.
+                  </p>
+                </li>
+              </ol>
+            </div>
+
+            <div class="faq__qa" role="region" aria-label="Частые вопросы">
+              <h3 class="faq__qa-title t-eyebrow">частые вопросы</h3>
+
+              <details class="faq__item" data-reveal>
+                <summary>сколько времени уходит на&nbsp;одну картину</summary>
+                <div class="faq__answer">
+                  <p>в&nbsp;среднем на&nbsp;сборку уходит от&nbsp;3 до&nbsp;5 часов —
+                  зависит от&nbsp;размера и&nbsp;сюжета, а&nbsp;также вашей
+                  скорости. но&nbsp;чаще всего GLAM собирают постепенно,
+                  растягивая процесс на&nbsp;несколько вечеров.</p>
+                </div>
+              </details>
+
+              <details class="faq__item" data-reveal>
+                <summary>что, если не&nbsp;хватило страз</summary>
+                <div class="faq__answer">
+                  <p>в&nbsp;каждый набор кладём стразы с&nbsp;небольшим запасом.
+                  если чего-то всё&nbsp;же не&nbsp;хватило — просто напишите нам,
+                  и&nbsp;мы обязательно поможем разобраться.</p>
+                </div>
+              </details>
+
+              <details class="faq__item" data-reveal>
+                <summary>можно ли заказать свой сюжет</summary>
+                <div class="faq__answer">
+                  <p>да, можно. напишите нам в&nbsp;Telegram и&nbsp;пришлите
+                  референс — каждый такой заказ рассчитывается
+                  индивидуально.</p>
+                </div>
+              </details>
+
+              <details class="faq__item" data-reveal>
+                <summary>что, если я&nbsp;никогда не&nbsp;делал(а) ничего руками</summary>
+                <div class="faq__answer">
+                  <p>внутри каждого набора есть инструкция, а&nbsp;сам процесс
+                  довольно простой и&nbsp;быстро затягивает. если вдруг
+                  появятся вопросы — всегда можно написать нам,
+                  и&nbsp;мы всё подскажем.</p>
+                </div>
+              </details>
+
+              <details class="faq__item" data-reveal>
+                <summary>как ухаживать за&nbsp;готовой картиной</summary>
+                <div class="faq__answer">
+                  <p>стразы держатся крепко и&nbsp;не&nbsp;требуют специального
+                  ухода. иногда можно аккуратно пройтись по&nbsp;поверхности
+                  сухой кистью или мягкой тканью от&nbsp;пыли.</p>
+                </div>
+              </details>
+
+              <details class="faq__item" data-reveal>
+                <summary>можно ли вернуть набор, если он не&nbsp;подошёл</summary>
+                <div class="faq__answer">
+                  <p>каждый набор собирается индивидуально под конкретный
+                  заказ, поэтому возврат после оплаты не&nbsp;предусмотрен.</p>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── S11.5 · Контакт ─────────────────────────────────── -->
+        <section class="contact" id="contact" data-theme="soft" aria-label="Остались вопросы">
+          <div class="container contact__container">
+            <header class="contact__head" data-reveal="title">
+              <span class="t-eyebrow contact__eyebrow">контакт</span>
+              <h2 class="contact__title">
+                хочешь собрать<br />
+                <em>свой сюжет?</em>
+              </h2>
+              <p class="contact__lede" data-reveal="text">
+                напишите нам — обсудим идею, сроки и&nbsp;детали заказа
+                индивидуально.
+              </p>
+            </header>
+
+            <a
+              class="contact__cta"
+              href="https://t.me/glammy_straz"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor="связаться с нами"
+              data-magnetic
+              data-magnetic-strength="0.2"
+            >
+              <span class="contact__cta-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m22 2-7 20-4-9-9-4 20-7z"/>
+                  <path d="M22 2 11 13"/>
+                </svg>
+              </span>
+              <span class="contact__cta-label">связаться с&nbsp;нами</span>
+              <span class="contact__cta-arrow" aria-hidden="true">→</span>
+            </a>
+
+            <div class="contact__socials" data-reveal>
+              <span class="contact__socials-label t-eyebrow">или найди нас</span>
+              <div class="contact__socials-row">
+                <a
+                  class="contact__social"
+                  href="https://t.me/glammy_straz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GLAM в Telegram"
+                  data-cursor="telegram"
+                >
+                  <span class="contact__social-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m22 2-7 20-4-9-9-4 20-7z"/>
+                      <path d="M22 2 11 13"/>
+                    </svg>
+                  </span>
+                  <span>telegram</span>
+                </a>
+                <a
+                  class="contact__social"
+                  href="https://www.instagram.com/glam.straz/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GLAM в Instagram"
+                  data-cursor="instagram"
+                >
+                  <span class="contact__social-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5"/>
+                      <path d="M16 11.37a4 4 0 1 1-7.914 1.173A4 4 0 0 1 16 11.37z"/>
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                  </span>
+                  <span>instagram</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── S12 · Final CTA ─────────────────────────────────── -->
+        <section class="cta" data-theme="brand" aria-label="Заказать набор">
+          <div class="container cta__container">
+
+            <span class="t-eyebrow cta__eyebrow" data-reveal="text">выбрать набор</span>
+
+            <h2 class="cta__title" data-reveal="title">
+              <span class="cta__line">сделай</span>
+              <span class="cta__line cta__line--em"><em>свою</em></span>
+            </h2>
+
+            <p class="cta__lede t-mono" data-reveal="text">
+              15 сюжетов · от&nbsp;3 990 ₽ до&nbsp;9 990 ₽<br />
+              собирается в&nbsp;Москве · сборка ~ 7&nbsp;дней
+            </p>
+
+            <a class="cta__btn" href="https://t.me/glammy_straz" target="_blank" rel="noopener noreferrer" data-cursor="связаться с нами" data-magnetic data-magnetic-strength="0.22">
+              <span class="cta__btn-label">связаться с&nbsp;нами</span>
+              <span class="cta__btn-arrow" aria-hidden="true">
+                <svg viewBox="0 0 60 14" fill="none">
+                  <path d="M0 7 H56 M50 1 L56 7 L50 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+                </svg>
+              </span>
+            </a>
+
+            <div class="cta__watermark" aria-hidden="true">
+              <!-- Фирменный знак GLAM (тот же path, что в шапке/футере),
+                   объявлен symbol'ом один раз и повторён через <use> —
+                   водяной знак теперь точно фирменным начертанием, а не
+                   набран текстом в Oswald. -->
+              <svg width="0" height="0" style="position:absolute" focusable="false">
+                <defs>
+                  <symbol id="glam-mark" viewBox="0 0 860 343">
+                    <path d="M 89.025 343 C 66.941 343 49.412 338.316 36.438 328.949 C 23.464 319.582 14.078 306.358 8.281 289.277 C 2.76 271.92 0 251.533 0 228.116 L 0 115.711 C 0 91.742 2.76 71.08 8.281 53.723 C 13.802 36.366 23.464 23.142 37.266 14.051 C 51.344 4.684 70.668 0 95.236 0 C 118.147 0 136.366 3.857 149.893 11.571 C 163.419 19.285 173.08 30.443 178.877 45.045 C 184.95 59.371 187.987 76.865 187.987 97.528 L 187.987 114.884 L 129.603 114.884 L 129.603 95.875 C 129.603 85.13 128.775 75.901 127.119 68.187 C 125.739 60.473 122.702 54.687 118.009 50.83 C 113.593 46.698 106.277 44.631 96.064 44.631 C 85.298 44.631 77.431 47.249 72.462 52.483 C 67.769 57.718 64.733 64.605 63.352 73.146 C 62.248 81.686 61.696 91.053 61.696 101.247 L 61.696 241.34 C 61.696 252.911 62.662 262.967 64.595 271.507 C 66.527 280.048 70.116 286.66 75.36 291.343 C 80.605 295.751 88.058 297.955 97.72 297.955 C 107.658 297.955 115.249 295.476 120.494 290.517 C 125.739 285.558 129.327 278.67 131.26 269.854 C 133.468 261.038 134.572 250.569 134.572 238.447 L 134.572 207.04 L 98.548 207.04 L 98.548 168.607 L 189.643 168.607 L 189.643 338.454 L 150.307 338.454 L 145.752 305.394 C 141.335 316.414 134.572 325.506 125.463 332.669 C 116.629 339.556 104.483 343 89.025 343 Z" fill="currentColor" />
+                    <path d="M 236.265 338.454 L 236.265 3.719 L 297.547 3.719 L 297.547 296.302 L 378.704 296.302 L 378.704 338.454 L 236.265 338.454 Z" fill="currentColor" />
+                    <path d="M 393.568 338.454 L 460.648 3.719 L 526.07 3.719 L 593.149 338.454 L 536.422 338.454 L 523.172 261.176 L 464.788 261.176 L 451.124 338.454 L 393.568 338.454 Z M 470.999 222.33 L 516.547 222.33 L 493.773 81.824 L 470.999 222.33 Z" fill="currentColor" />
+                    <path d="M 626.052 338.454 L 631.848 3.719 L 695.201 3.719 L 742.819 235.554 L 792.507 3.719 L 853.789 3.719 L 860 338.454 L 814.453 338.454 L 809.484 105.793 L 761.866 338.454 L 725.014 338.454 L 676.568 104.966 L 672.013 338.454 L 626.052 338.454 Z" fill="currentColor" />
+                  </symbol>
+                </defs>
+              </svg>
+              <div class="cta__wm-row">
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+              </div>
+              <div class="cta__wm-row">
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+              </div>
+              <div class="cta__wm-row">
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+                <svg class="cta__wm-logo" viewBox="0 0 860 343"><use href="#glam-mark" /></svg>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ─── Footer ─────────────────────────────────────────────── -->
+      <footer class="footer" data-theme="dark">
+        <div class="container footer__container">
+
+          <div class="footer__brand">
+            <svg class="footer__logo" viewBox="0 0 860 343" fill="none" aria-label="GLAM">
+              <path d="M 89.025 343 C 66.941 343 49.412 338.316 36.438 328.949 C 23.464 319.582 14.078 306.358 8.281 289.277 C 2.76 271.92 0 251.533 0 228.116 L 0 115.711 C 0 91.742 2.76 71.08 8.281 53.723 C 13.802 36.366 23.464 23.142 37.266 14.051 C 51.344 4.684 70.668 0 95.236 0 C 118.147 0 136.366 3.857 149.893 11.571 C 163.419 19.285 173.08 30.443 178.877 45.045 C 184.95 59.371 187.987 76.865 187.987 97.528 L 187.987 114.884 L 129.603 114.884 L 129.603 95.875 C 129.603 85.13 128.775 75.901 127.119 68.187 C 125.739 60.473 122.702 54.687 118.009 50.83 C 113.593 46.698 106.277 44.631 96.064 44.631 C 85.298 44.631 77.431 47.249 72.462 52.483 C 67.769 57.718 64.733 64.605 63.352 73.146 C 62.248 81.686 61.696 91.053 61.696 101.247 L 61.696 241.34 C 61.696 252.911 62.662 262.967 64.595 271.507 C 66.527 280.048 70.116 286.66 75.36 291.343 C 80.605 295.751 88.058 297.955 97.72 297.955 C 107.658 297.955 115.249 295.476 120.494 290.517 C 125.739 285.558 129.327 278.67 131.26 269.854 C 133.468 261.038 134.572 250.569 134.572 238.447 L 134.572 207.04 L 98.548 207.04 L 98.548 168.607 L 189.643 168.607 L 189.643 338.454 L 150.307 338.454 L 145.752 305.394 C 141.335 316.414 134.572 325.506 125.463 332.669 C 116.629 339.556 104.483 343 89.025 343 Z" fill="currentColor" />
+              <path d="M 236.265 338.454 L 236.265 3.719 L 297.547 3.719 L 297.547 296.302 L 378.704 296.302 L 378.704 338.454 L 236.265 338.454 Z" fill="currentColor" />
+              <path d="M 393.568 338.454 L 460.648 3.719 L 526.07 3.719 L 593.149 338.454 L 536.422 338.454 L 523.172 261.176 L 464.788 261.176 L 451.124 338.454 L 393.568 338.454 Z M 470.999 222.33 L 516.547 222.33 L 493.773 81.824 L 470.999 222.33 Z" fill="currentColor" />
+              <path d="M 626.052 338.454 L 631.848 3.719 L 695.201 3.719 L 742.819 235.554 L 792.507 3.719 L 853.789 3.719 L 860 338.454 L 814.453 338.454 L 809.484 105.793 L 761.866 338.454 L 725.014 338.454 L 676.568 104.966 L 672.013 338.454 L 626.052 338.454 Z" fill="currentColor" />
+            </svg>
+            <p class="footer__tagline t-mono-sm">
+              творчество, которое расслабляет<br />
+              собирается в&nbsp;Москве
+            </p>
+          </div>
+
+          <nav class="footer__nav" aria-label="Footer навигация">
+            <div class="footer__nav-col">
+              <span class="t-eyebrow">сайт</span>
+              <a href="#catalog">каталог</a>
+              <a href="#ritual-process">ритуал</a>
+              <a href="#reviews">отзывы</a>
+              <a href="#founder">о&nbsp;нас</a>
+              <a href="#faq">условия</a>
+            </div>
+            <div class="footer__nav-col">
+              <span class="t-eyebrow">связь</span>
+              <a href="https://t.me/glammy_straz" target="_blank" rel="noopener noreferrer" data-cursor="telegram">telegram →</a>
+              <a href="https://www.instagram.com/glam.straz/" target="_blank" rel="noopener noreferrer" data-cursor="instagram">instagram →</a>
+            </div>
+            <div class="footer__nav-col">
+              <span class="t-eyebrow">оплата</span>
+              <span>предоплата 100%</span>
+              <span>картой по&nbsp;РФ</span>
+              <span>сбп · перевод</span>
+            </div>
+          </nav>
+
+          <div class="footer__legal">
+            <span class="t-mono-sm">© 2026 — glam · москва</span>
+            <span class="t-mono-sm">ручная сборка в&nbsp;Москве</span>
+          </div>
+
+        </div>
+      </footer>
+    </div>
+
+  </body>
+</html>
