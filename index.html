@@ -106,20 +106,14 @@
       />
     </noscript>
 
-    <!-- Preload critical above-fold images so they paint alongside fonts.
-         Hero is the very first thing the user sees; pillar-1 sits right
-         below, so we kick off both fetches in parallel before the main
-         bundle parses. -->
+    <!-- Preload ТОЛЬКО hero — единственная картинка над линией сгиба.
+         pillar-1 (секция 3) раньше тоже преложился с high-priority и
+         отнимал канал у hero на старте; теперь он грузится обычным
+         eager-ом по мере необходимости, а первый экран рисуется быстрее. -->
     <link
       rel="preload"
       as="image"
       href="/glam/assets/images/hero.webp"
-      fetchpriority="high"
-    />
-    <link
-      rel="preload"
-      as="image"
-      href="/glam/assets/images/pillar-1-ritual.webp"
       fetchpriority="high"
     />
 
@@ -222,9 +216,9 @@
       .nav { visibility: hidden; }
       html.is-ready .nav { visibility: visible; }
     </style>
-    <script type="module" crossorigin src="/glam/assets/index-BtKEHK7r.js"></script>
+    <script type="module" crossorigin src="/glam/assets/index-BjSLPJ0X.js"></script>
     <link rel="modulepreload" crossorigin href="/glam/assets/gsap-xgxdCp6f.js">
-    <link rel="stylesheet" crossorigin href="/glam/assets/style-CVT2T8jN.css">
+    <link rel="stylesheet" crossorigin href="/glam/assets/style-B_5ekvNU.css">
   </head>
   <body>
     <a class="skip-link" href="#top">перейти к&nbsp;контенту</a>
