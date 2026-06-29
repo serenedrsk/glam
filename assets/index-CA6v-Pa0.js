@@ -12,7 +12,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   <div class="painting__mat">
     <img
       class="painting__img"
-      src="/glam/assets/catalog/${e.id}.webp"
+      src="/assets/catalog/${e.id}.webp"
       alt="${e.title} — картина из стеклянных страз"
       loading="lazy"
       decoding="async"
