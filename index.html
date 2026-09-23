@@ -2,7 +2,10 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/assets/svg/glam-wordmark.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#D30643" />
     <title>GLAM — творчество, которое расслабляет</title>
@@ -37,6 +40,11 @@
       try {
         if ('scrollRestoration' in history) {
           history.scrollRestoration = 'manual';
+        }
+        // Ссылка с якорем (glamstraz.ru/#catalog) не должна открывать сайт
+        // с середины: убираем якорь до того, как браузер к нему прыгнет.
+        if (location.hash) {
+          history.replaceState(null, '', location.pathname + location.search);
         }
         window.scrollTo(0, 0);
         // Catch the moment after browser parses but before paint
