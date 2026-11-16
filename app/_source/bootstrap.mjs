@@ -13,7 +13,7 @@ function showGiftCertificate() {
     const shelf = home?.querySelector(':scope > [data-shelf]');
     if (!shelf || home.querySelector('.mini-gift-certificate')) return;
 
-    const card = template.content.cloneNode(true);
+    const card = template.content.firstElementChild.cloneNode(true);
     const link = card.querySelector('a');
     link.addEventListener('click', event => {
       const webApp = window.Telegram?.WebApp;
@@ -27,6 +27,27 @@ function showGiftCertificate() {
       webApp.close?.();
     });
     shelf.before(card);
+
+    const filters = home.querySelector(':scope > .chips');
+    const certificateFilter = filters?.querySelector('button[data-f="compact"]');
+    if (!certificateFilter) return;
+    certificateFilter.textContent = 'сертификаты';
+    certificateFilter.dataset.f = 'certificates';
+    certificateFilter.removeAttribute('data-act');
+
+    filters.addEventListener('click', event => {
+      const selected = event.target.closest('button[data-f]');
+      if (!selected) return;
+      const certificatesOnly = selected === certificateFilter;
+      card.hidden = !certificatesOnly && selected.dataset.f !== 'all';
+      shelf.hidden = certificatesOnly;
+      if (certificatesOnly) {
+        for (const filter of filters.querySelectorAll('button[data-f]')) {
+          filter.setAttribute('aria-pressed', String(filter === selected));
+        }
+        card.scrollIntoView({block: 'nearest'});
+      }
+    });
   }
 
   mount();

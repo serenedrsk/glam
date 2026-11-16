@@ -6,6 +6,11 @@
   margin: 12px var(--gut) 18px;
   padding: 12px;
   background: var(--pink-pale);
+  scroll-margin-top: calc(var(--safe-t, 0px) + 64px);
+}
+
+.mini-gift-certificate[hidden] {
+  display: none;
 }
 
 .mini-gift-certificate img {
