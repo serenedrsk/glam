@@ -1,0 +1,49 @@
+.mini-gift-certificate {
+  display: grid;
+  grid-template-columns: clamp(76px, 26vw, 146px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(12px, 3vw, 24px);
+  margin: 12px var(--gut) 18px;
+  padding: 12px;
+  background: var(--pink-pale);
+}
+
+.mini-gift-certificate img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mini-gift-certificate h2 {
+  margin: 0 0 4px;
+  color: var(--night);
+  font-family: var(--display);
+  font-size: clamp(19px, 5vw, 28px);
+  font-weight: 500;
+  line-height: 1.12;
+}
+
+.mini-gift-certificate p {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: clamp(10px, 2.65vw, 14px);
+  letter-spacing: normal;
+}
+
+.mini-gift-certificate a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 5px;
+  color: var(--crimson);
+  font-family: var(--mono);
+  font-size: clamp(12px, 3vw, 15px);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mini-gift-certificate a:focus-visible {
+  outline: 2px solid var(--crimson);
+  outline-offset: 2px;
+}
